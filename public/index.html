@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input {
+      width: 220px;
+      font-size: 24px;
+      margin: 12px 0 12px;
+      padding: 6px;
+    }
+    button {
+      width: 60%;
+      font-size: 16px;
+      background: blue;
+      color: #fff;
+      border: 0;
+      padding: 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Create short URL</h1>
+
+  <form method="get">
+    <input type="text" id="url">
+    <button type="submit">Create</button>
+  </form>
+
+  <script>
+    const form = document.querySelector('form')
+    const sendUrl = async (url) => {
+      const res = await fetch(`/create/?url=${url}`)
+      const data = await res.json()
+      document.querySelector('body').innerHTML = `<h1>your url: <a href="${data.link}">${data.link}</a></h1>`
+      console.log(data)
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      const url = form.url.value
+      sendUrl(url)
+    })
+  </script>
+</body>
+</html>
